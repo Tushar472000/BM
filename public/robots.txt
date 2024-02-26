@@ -1,0 +1,13 @@
+User-agent: * 
+
+Disallow: *http://106.201.231.27
+Disallow: /myaccount
+
+Allow: /
+Sitemap: https://www.bullionmentor.com/sitemap.xml
+Allow: /https://www.bullionmentor.com/ads.txt
+
+User-agent: Linguee
+Disallow: /
+Disallow: *?searchkw
+

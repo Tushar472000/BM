@@ -1,0 +1,12 @@
+<sitemapindex
+	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<sitemap>
+		<loc>https://www.bullionmentor.com/static.xml</loc>
+	</sitemap>
+	<sitemap>
+		<loc>https://www.bullionmentor.com/products.xml</loc>
+	</sitemap>
+	<sitemap>
+		<loc>https://www.bullionmentor.com/blogs.xml</loc>
+	</sitemap>
+</sitemapindex>
