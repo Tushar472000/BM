@@ -70,7 +70,8 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     fill
                     src={image.mobileImageurl}
                     alt={image.imageName}
-                   
+                    priority={true}
+                    loading='eager'
                   />
                 </Link>
               </div>
