@@ -30,6 +30,7 @@ const RequestProductModal = dynamic(
 const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
+const Search = dynamic(() => import('@/components/Search'));
 
 export default function Home({
   title,
@@ -110,7 +111,7 @@ export default function Home({
           }
         />
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
-         <script
+        <script
           async
           defer
           type='application/ld+json'
@@ -147,7 +148,7 @@ export default function Home({
           href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/apmex-gold-bar-blast-mob.webp'
         />
       </Head>
-      <Suspense fallback={<DashboardSkeleton/>}>
+      <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
           <div>
             {/* ******************** GRADIENT HEADING ******************** */}
@@ -225,7 +226,7 @@ export default function Home({
                     />
                   </div>
                 </div>
-                
+
                 {/* ******************** PRODUCT LISTING ******************** */}
                 <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
                   {/* ******************** PRODUCT LIST TITLE ******************** */}

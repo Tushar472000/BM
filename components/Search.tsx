@@ -5,10 +5,13 @@ import { FormEvent, useEffect, useRef, useState } from 'react';
 import SearchResults from './SearchResults';
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
-import SearchSpinner from './Loaders/SearchSpinner';
+import dynamic from 'next/dynamic';
 
-const  pageSize=12;
-const  pageNumber= 1;
+const SearchResults = dynamic(() => import('./SearchResults'));
+const SearchSpinner = dynamic(() => import('./Loaders/SearchSpinner'));
+
+const pageSize = 12;
+const pageNumber = 1;
 export default function Search() {
   const [searchedData, setSearchedData] = useState<Awaited<
     ReturnType<typeof search>
