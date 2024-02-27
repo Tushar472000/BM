@@ -28,12 +28,7 @@ const RequestProductModal = dynamic(
 const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
-const Search = dynamic(
-  () => import('@/components/Search')
-);
-const SubscribeModal = dynamic(
-  () => import('@/components/ModalForm/Subscribe/SubscribeModal')
-);
+const Search = dynamic(() => import('@/components/Search'));
 
 export default function Home({
   title,

@@ -1,11 +1,12 @@
 import data from '@/data';
-
+import { AnimatePresence } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import IconMenu from '../icons/IconMenu';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import { RegisterLoginModal } from '../ModalForm';
 import Modal from '../ModalForm/Modal';
 import useToggle from '@/hooks/useToggle';
 import { useRouter } from 'next/router';
@@ -23,15 +24,6 @@ const GoldMenu = dynamic(() => import('../goldMenu'));
 const SilverMenu = dynamic(() => import('../silverMenu'));
 const NearToSpotMenu = dynamic(() => import('../NearToSpotMenu'));
 const MobileMenu = dynamic(() => import('../MobileMenu'));
-const AnimatePresence = dynamic(
-  () => import('framer-motion').then((module) => module.AnimatePresence),
-  {
-    ssr: false // Set to false to disable server-side rendering
-  }
-);
-const RegisterLoginModal = dynamic(() =>
-  import('../ModalForm').then((module) => module.RegisterLoginModal)
-);
 
 export default function TopNavbar() {
   const { data: session } = useSession();
