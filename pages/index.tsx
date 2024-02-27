@@ -110,42 +110,8 @@ export default function Home({
           }
         />
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
-        <script
-          async
-          defer
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-          key='product-jsonld'
-        ></script>
-        <script
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-        />
-        <script
-          async
-          defer
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(trendingProductsSchema)
-          }}
-          key='product-jsonld'
-        ></script>
-        <link rel='preload' as='image' href={staticImage?.imagePath} />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp'
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/apmex-gold-bar-blast-mob.webp'
-        />
+   
+      
       </Head>
       <Suspense fallback={<DashboardSkeleton/>}>
         {hydrated === true ? (
