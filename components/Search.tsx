@@ -1,22 +1,14 @@
 import { search } from '@/services/dashboard';
-
+import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useRef, useState } from 'react';
+import SearchResults from './SearchResults';
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
+import SearchSpinner from './Loaders/SearchSpinner';
 
-import dynamic from 'next/dynamic';
-
-const AnimatePresence = dynamic(
-  () => import('framer-motion').then((module) => module.AnimatePresence),
-  {
-    ssr: false // Set to false to disable server-side rendering
-  }
-);
-const SearchResults = dynamic(() => import('./SearchResults'));
-const SearchSpinner = dynamic(() => import('./Loaders/SearchSpinner'));
-const pageSize = 12;
-const pageNumber = 1;
+const  pageSize=12;
+const  pageNumber= 1;
 export default function Search() {
   const [searchedData, setSearchedData] = useState<Awaited<
     ReturnType<typeof search>
@@ -107,7 +99,7 @@ export default function Search() {
       }
       // Set a new timer for the API call after the specified delay (e.g., 500ms)
       timer = setTimeout(async () => {
-        const data = await search(query, pageSize, pageNumber);
+        const data = await search(query ,pageSize , pageNumber);
         setLoading(false);
         setSearchedData(data);
       }, 2000); // Adjust the delay as needed (e.g., 500ms)
@@ -122,8 +114,8 @@ export default function Search() {
       productType: '',
       itemWeight: '',
       series: '',
-      size: pageSize,
-      pageNumber: pageNumber
+      size:pageSize,
+      pageNumber:pageNumber
     };
 
     if (keyword.length >= 3) {
@@ -133,7 +125,7 @@ export default function Search() {
     // Cleanup the timer when the component unmounts
     return () => clearTimeout(timer);
   }, [keyword]);
-
+  
   return (
     <>
       <div className='relative w-full'>
@@ -180,11 +172,8 @@ export default function Search() {
               handleClose={handleClose}
             />
           ) : keyword.length >= 1 && loading === true ? (
-            <div
-              className={`md:full absolute inset-x-0 z-40 mx-auto mt-0.5 flex max-h-[28rem] w-auto flex-col gap-4 divide-gray-300  overflow-y-hidden rounded-2xl bg-white text-black shadow-xl md:mt-0.5 md:block md:divide-y md:px-4 md:py-0 lg:mt-0.5 lg:w-full`}
-            >
-              <SearchSpinner />
-            </div>
+            <div className={`md:full absolute inset-x-0 z-40 mx-auto max-h-[28rem] overflow-y-hidden flex w-auto flex-col gap-4 divide-gray-300  rounded-2xl bg-white text-black shadow-xl md:block md:divide-y md:px-4 md:py-0 lg:w-full mt-0.5 md:mt-0.5 lg:mt-0.5`}><SearchSpinner />
+              </div>
           ) : searchedData && searchedData.data.searchProducts.length < 1 ? (
             <SearchResults
               ref={searchResultsRef}

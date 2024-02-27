@@ -1,11 +1,12 @@
 import data from '@/data';
-
+import { AnimatePresence } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import IconMenu from '../icons/IconMenu';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import { RegisterLoginModal } from '../ModalForm';
 import Modal from '../ModalForm/Modal';
 import useToggle from '@/hooks/useToggle';
 import { useRouter } from 'next/router';
@@ -21,17 +22,8 @@ import dynamic from 'next/dynamic';
 const ShareModal = dynamic(() => import('../ModalForm/ShareModal/shareModal'));
 const GoldMenu = dynamic(() => import('../goldMenu'));
 const SilverMenu = dynamic(() => import('../silverMenu'));
-const NearToSpotMenu = dynamic(() => import('../NearToSpotMenu'));
+const NearToSpotMenu = dynamic(()=> import('../NearToSpotMenu'));
 const MobileMenu = dynamic(() => import('../MobileMenu'));
-const AnimatePresence = dynamic(
-  () => import('framer-motion').then((module) => module.AnimatePresence),
-  {
-    ssr: false // Set to false to disable server-side rendering
-  }
-);
-const RegisterLoginModal = dynamic(() =>
-  import('../ModalForm').then((module) => module.RegisterLoginModal)
-);
 
 export default function TopNavbar() {
   const { data: session } = useSession();
@@ -132,7 +124,7 @@ export default function TopNavbar() {
           <button
             aria-label='Mobile_Menu'
             onClick={() => setShowMobileMenu(true)}
-            className='mr-2 w-[40px] lg:hidden'
+            className='mr-2 lg:hidden'
           >
             <IconMenu className='h-10 w-10 fill-white stroke-2' />
           </button>
@@ -172,11 +164,10 @@ export default function TopNavbar() {
             >
               <Link
                 href='/silver'
-                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${
-                  router.pathname === '/silver'
-                    ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                    : ''
-                }`}
+                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${router.pathname === '/silver'
+                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                  : ''
+                  }`}
                 passHref
                 prefetch={false}
               >
@@ -200,11 +191,10 @@ export default function TopNavbar() {
             >
               <Link
                 href='/gold'
-                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${
-                  router.pathname === '/gold'
-                    ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                    : ''
-                }`}
+                className={`hidden py-1 text-sm font-medium hover:text-primary lg:block ${router.pathname === '/gold'
+                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                  : ''
+                  }`}
                 passHref
                 prefetch={false}
               >
@@ -221,52 +211,50 @@ export default function TopNavbar() {
               </AnimatePresence>
             </div>
 
-            <div
+            <div 
               onMouseOver={() => setshowNearSpotMenu(true)}
               onMouseLeave={() => setshowNearSpotMenu(false)}
               onClick={() => setshowNearSpotMenu(!setshowNearSpotMenu)}
               className='relative'
-            >
-              <Link
-                className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
-                  router.pathname === '/near-to-spot/silver'
-                    ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                    : ''
-                }`}
-                href={'/near-to-spot/silver'}
-                passHref
-                prefetch={false}
               >
-                <button className='py-1 text-sm font-normal hover:text-primary'>
-                  Near to Spot
-                </button>
-              </Link>
-              <AnimatePresence>
+            <Link 
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/near-to-spot/silver'
+                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                : ''
+                }`}
+              href={'/near-to-spot/silver'}
+              passHref
+              prefetch={false}
+            >
+              <button className='py-1 text-sm font-normal hover:text-primary'>
+                Near to Spot
+                </button> 
+            </Link>
+            <AnimatePresence>
                 {showNearSpotMenu && (
                   <MegaMenu>
                     <NearToSpotMenu hideNearToSpotMenu={hideNearToSpotMenu} />
                   </MegaMenu>
                 )}
               </AnimatePresence>
-            </div>
+              </div>
+
 
             <Link
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
-                router.pathname === '/new-launched'
-                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                  : ''
-              }`}
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/new-launched'
+                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                : ''
+                }`}
               href={'/new-launched'}
               prefetch={false}
             >
               New Launched
             </Link>
             <Link
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
-                router.pathname === '/blogs'
-                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                  : ''
-              }`}
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/blogs'
+                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                : ''
+                }`}
               href={'/blogs'}
               passHref
               prefetch={false}
@@ -274,11 +262,10 @@ export default function TopNavbar() {
               Blog
             </Link>
             <Link
-              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${
-                router.pathname === '/dealer-review'
-                  ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
-                  : ''
-              }`}
+              className={`hidden py-1 text-sm font-normal hover:text-primary lg:block ${router.pathname === '/dealer-review'
+                ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
+                : ''
+                }`}
               href='/dealer-review'
               prefetch={false}
             >
@@ -286,11 +273,10 @@ export default function TopNavbar() {
             </Link>
             <Link
               className={`hidden py-1 text-sm font-normal hover:text-primary lg:block 
-              ${
-                router.pathname === '/observations'
+              ${router.pathname === '/observations'
                   ? "after:contents-[''] relative text-primary after:absolute after:inset-x-0 after:bottom-0 after:h-1 after:bg-primary"
                   : ''
-              }
+                }
               `}
               href='/observations'
               passHref
@@ -366,7 +352,7 @@ export default function TopNavbar() {
                         className='py-2 hover:cursor-pointer hover:text-primary'
                       >
                         Logout
-                      </li>
+                                             </li>
                     </ul>
                   </div>
                 </AnimatePresence>
