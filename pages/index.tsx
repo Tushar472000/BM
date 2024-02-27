@@ -14,7 +14,7 @@ import useToggle from '@/hooks/useToggle';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoGridSharp } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
-import Search from '@/components/Search';
+
 import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
 import TopProductItem from '@/containers/home/TopProductItem';
