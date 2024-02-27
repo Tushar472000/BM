@@ -2,7 +2,7 @@ import { search } from '@/services/dashboard';
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useRef, useState } from 'react';
-import SearchResults from './SearchResults';
+
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
 import dynamic from 'next/dynamic';
