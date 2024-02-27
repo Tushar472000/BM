@@ -1,20 +1,14 @@
 import { search } from '@/services/dashboard';
-
+import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
-
 import dynamic from 'next/dynamic';
 
-const AnimatePresence = dynamic(
-  () => import('framer-motion').then((module) => module.AnimatePresence),
-  {
-    ssr: false // Set to false to disable server-side rendering
-  }
-);
 const SearchResults = dynamic(() => import('./SearchResults'));
 const SearchSpinner = dynamic(() => import('./Loaders/SearchSpinner'));
+
 const pageSize = 12;
 const pageNumber = 1;
 export default function Search() {

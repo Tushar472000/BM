@@ -28,12 +28,7 @@ export default function App({
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:title' content={pageProps?.title} />
         <meta property='og:description' content={pageProps?.description} />
-        {/* <meta property='og:url' content={`${process.env.WEBSITE_URL}`} /> */}
-        {/* <meta
-          property='og:image'
-          content='https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/thumbnail.webp' // Path to your thumbnail image
-        /> */}
-        {/* <link rel='canonical' href={`${process.env.WEBSITE_URL}`} /> */}
+    
       </Head>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
