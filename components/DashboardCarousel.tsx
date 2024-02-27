@@ -1,4 +1,3 @@
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
@@ -6,9 +5,11 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { useSelector } from 'react-redux';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
+
+const Slider = lazy(() => import('react-slick'));
 
 export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const [productName, setProductName] = useState('');
@@ -39,15 +40,8 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   return (
     <>
       <Head>
-        {images.map((image: any, index: any) => (
-          <Link
-            rel='preload'
-            as='image'
-            key={index}
-            href={image.imagePath}
-            prefetch={false}
-          ></Link>
-        ))}
+        <link rel='preload' as='image' href={images[0].imagePath}></link>
+        <link rel='preload' as='image' href={images[1].imagePath}></link>
         <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
         <link rel='preload' as='image' href={images[1].mobileImageurl}></link>
       </Head>
