@@ -63,16 +63,14 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     fill
                     src={image.imagePath}
                     alt={image.imageName}
-                    priority={true}
-                    loading='eager'
+                    
                   />
                   <Image
                     className='block sm:hidden'
                     fill
                     src={image.mobileImageurl}
                     alt={image.imageName}
-                    priority={true}
-                    loading='eager'
+                   
                   />
                 </Link>
               </div>
