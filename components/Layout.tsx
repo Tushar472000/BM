@@ -66,7 +66,7 @@ export default function Layout({ children }: LayoutProps, req: NextRequest) {
             dangerouslySetInnerHTML={noscriptfb()}
           />
         </Head>
-        
+        <Header />
         <main className='min-h-screen pt-[66px] lg:pt-[100px]'>{children}</main>
         <Footer />
       </>
