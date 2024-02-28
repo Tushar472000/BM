@@ -34,8 +34,6 @@ const Search = dynamic(() => import('@/components/Search'));
 
 const LeftAdvertisements =dynamic(() => import('@/components/LeftAdvertisements'))
 
-const ProductArray = dynamic(()=>import('@/components/ProductArray'))
-
 export default function Home({
   title,
   description,
@@ -252,7 +250,25 @@ export default function Home({
                     </div>
                   </div>
                   {/* ******************** PRODUCTS ARRAY ******************** */}
-                  <ProductArray topProducts={topProducts} view={view}></ProductArray>
+                  <Suspense fallback={<GridViewSkeleton />}>
+                    <div
+                      className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
+                        view === 'grid'
+                          ? 'grid-cols-2 xl:grid-cols-4 '
+                          : 'grid-cols-1 lg:grid-cols-2'
+                      }`}
+                    >
+                      {topProducts.homePageProductDetails.map(
+                        (product: any) => (
+                          <TopProductItem
+                            view={view}
+                            key={product.productId}
+                            {...product}
+                          />
+                        )
+                      )}
+                    </div>
+                  </Suspense>
                 </div>
               </div>
             </section>
@@ -295,6 +311,4 @@ export const getServerSideProps: GetServerSideProps<{
   };
 };
 
-
- 
 
