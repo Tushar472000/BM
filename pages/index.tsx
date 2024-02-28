@@ -187,6 +187,20 @@ export default function Home({
                 </div>
               </section>
             </section>
+            <div className='flex flex-col items-center'>
+                    <h2 className='pt-4 text-2xl font-semibold'>Sponsored</h2>
+                    <hr className='my-2 w-full' />
+                    <Image
+                      className='item-center h-[300px] w-[343px] cursor-pointer md:h-[250px] lg:w-[500px] xl:h-[300px] '
+                      onClick={toggleRequestModal}
+                      src='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
+                      height={500}
+                      width={500}
+                      alt='ads'
+                      priority={true}
+                      loading='eager'
+                    />
+                  </div>
             {/* ******************** PAGE HEADING ******************** */}
             <section className='container mx-auto mt-4 w-full text-dark-black'>
               <div className='flex grid-cols-3 flex-col-reverse gap-4 md:grid lg:grid-cols-12'>
@@ -214,9 +228,10 @@ export default function Home({
                     />
                   </div>
                 </div>
+                
 
                 {/* ******************** PRODUCT LISTING ******************** */}
-                <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9 mt-[200px]'>
+                <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
                   {/* ******************** PRODUCT LIST TITLE ******************** */}
                   <div className='flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-0'>
                     <h2 className='-mt-1 flex items-center gap-2 text-xl font-semibold md:-mt-0 md:text-2xl'>
