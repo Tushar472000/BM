@@ -35,7 +35,7 @@ export default function App({
             <Layout>
               <Script
                 src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
-                strategy='lazyOnload'
+                strategy='afterInteractive'
               />
               {/*------------ Google analytics start ---------------- */}
               <Script async defer id='google-analytics'>

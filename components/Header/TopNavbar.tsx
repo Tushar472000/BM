@@ -154,7 +154,7 @@ export default function TopNavbar() {
               loading='lazy'
             />
           </Link>
-          <div className='max-w-[267px] grow'>&nbsp;</div>
+          
           <div className='ml-auto items-center gap-6 md:text-sm lg:flex'>
             <div
               onMouseOver={() => setShowSilverMenu(true)}
