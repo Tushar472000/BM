@@ -216,7 +216,7 @@ export default function Home({
                 </div>
 
                 {/* ******************** PRODUCT LISTING ******************** */}
-                <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9 mt-[200px]'>
+                <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
                   {/* ******************** PRODUCT LIST TITLE ******************** */}
                   <div className='flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-0'>
                     <h2 className='-mt-1 flex items-center gap-2 text-xl font-semibold md:-mt-0 md:text-2xl'>
