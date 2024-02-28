@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GoFlame } from 'react-icons/go';
 import { GridViewSkeleton } from '../Grid/GridViewSkeleton';
 export default function DashboardSkeleton() {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
@@ -37,6 +38,11 @@ export default function DashboardSkeleton() {
           </div>
           {/* ******************* PRODUCT GRID ****************** */}
           <div className='md:col-span-2 lg:col-span-9'>
+            {/* ******************* PRODUCT GRID TITLE ****************** */}
+            <h2 className='-mt-4 flex items-center gap-2 text-xl font-semibold md:-mt-0 md:text-2xl'>
+              <GoFlame className='text-2xl text-primary md:text-3xl' />
+              Trending Deals
+            </h2>
             {/* ******************* PRODUCT GRID TOGGLE BUTTONS ****************** */}
             <div className='hidden gap-6 self-end md:flex md:self-auto'>
               {/* ******************* DETAILED VIEW BUTTON ****************** */}
