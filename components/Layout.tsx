@@ -45,7 +45,7 @@ export default function Layout({ children }: LayoutProps, req: NextRequest) {
       <>
         
         
-        <main className='min-h-screen pt-[66px] lg:pt-[100px]'>{children}</main>
+        <main className='min-h-screen pt-[66px] lg:pt-[100px]'><h1>Hello</h1></main>
         
       </>
     );
