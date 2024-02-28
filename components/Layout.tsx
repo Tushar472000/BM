@@ -43,7 +43,29 @@ export default function Layout({ children }: LayoutProps, req: NextRequest) {
   }
     return (
       <>
-        
+        <Head>
+          <link
+            rel='icon'
+            href='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-favicon.png'
+            className='object-cover'
+          />
+        <script async defer
+            type='application/ld+json'
+            dangerouslySetInnerHTML={addProductJsonLd()}
+            key='product-jsonld'
+          />
+          <link
+            rel='preload'
+            as='image'
+            href='https://res.cloudinary.com/bold-pm/image/upload/BBD/subscribe-bg.webp'
+          />
+          <script async defer
+            dangerouslySetInnerHTML={facebookScript()}
+          />
+          <noscript
+            dangerouslySetInnerHTML={noscriptfb()}
+          />
+        </Head>
         
         <main className='min-h-screen pt-[66px] lg:pt-[100px]'>{children}</main>
         
