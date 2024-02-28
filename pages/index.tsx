@@ -131,23 +131,7 @@ export default function Home({
           }}
           key='product-jsonld'
         ></script>
-        <link rel='preload' as='image' href={staticImage?.imagePath} />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp'
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Images/ads-looking_fnfe0i.webp'
-        />
-        <link
-          rel='preload'
-          as='image'
-          href='https://res.cloudinary.com/bullionmentor/image/upload/Banners/apmex-gold-bar-blast-mob.webp'
-        />
-      </Head>
+          </Head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
           <div>
