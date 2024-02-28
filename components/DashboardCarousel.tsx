@@ -63,7 +63,8 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     fill
                     src={image.imagePath}
                     alt={image.imageName}
-                    
+                    priority={true}
+                    loading='eager'
                   />
                   <Image
                     className='block sm:hidden'
