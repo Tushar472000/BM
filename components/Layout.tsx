@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { LayoutProps } from '@/interfaces/typeinterfaces';
-import Header from './Header';
 import { NextRequest } from 'next/server';
 import dynamic from 'next/dynamic';
 // -------------------------- Dynamic import -------------------//
 const Footer = dynamic(() => import('./Footer'));
+const Header = dynamic(() => import('./Header'));
 
 export default function Layout({ children }: LayoutProps, req: NextRequest) {
 
