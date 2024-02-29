@@ -72,7 +72,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     src={image.imagePath}
                     alt={image.imageName}
                     priority={true}
-                    loading='lazy' // Change loading attribute to 'lazy'
+                    loading='eager' 
                   />
 
                   <Image
@@ -81,7 +81,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     src={image.mobileImageurl}
                     alt={image.imageName}
                     priority={true}
-                    loading='lazy' // Change loading attribute to 'lazy'
+                    loading='eager' 
                     quality={60}
                   />
                 </Link>
