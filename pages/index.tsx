@@ -44,6 +44,10 @@ export default function Home({
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
   useEffect(() => {
+    const check = async () => {
+      await getMaintainance();
+    };
+    check();
     const dashboardImages = DashboardImages();
     setDynamicImages(
       dashboardImages.filter((image) => image.isStatic === false)
@@ -54,26 +58,15 @@ export default function Home({
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-
-  const homePageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Bullion Mentor',
-    url: 'https://www.bullionmentor.com/',
-    logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
-  };
-  const itemListElement = topProducts.homePageProductDetails.map(
-    (product: any, index: number) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: 'https://www.bullionmentor.com/' + product.shortName
-    })
-  );
-  const trendingProductsSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: itemListElement
-  };
+  useEffect(() => {
+    if (user.hasVisited === false) {
+      setTimeout(() => {
+        toggleSubscribeModal();
+        dispatch(isVisited(true));
+      }, 6000);
+    }
+  }, []);
+  
   return (
     <>
       <Head>
@@ -100,26 +93,7 @@ export default function Home({
           }
         />
         <link rel='canonical' href={`${process.env.WEBSITE_URL}`} />
-        <script
-          async
-          defer
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-          key='product-jsonld'
-        ></script>
-        <script
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
-        />
-        <script
-          async
-          defer
-          type='application/ld+json'
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(trendingProductsSchema)
-          }}
-          key='product-jsonld'
-        ></script>
+       
           </Head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
