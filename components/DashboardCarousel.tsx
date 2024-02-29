@@ -73,7 +73,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     alt={image.imageName}
                     priority={true}
                     loading='eager'
-                    quality={20}
+                    quality={60}
                   />
                 </Link>
               </div>
