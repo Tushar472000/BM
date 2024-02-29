@@ -63,7 +63,7 @@ export default function Home({
       setTimeout(() => {
         toggleSubscribeModal();
         dispatch(isVisited(true));
-      }, 3000);
+      }, 1000);
     }
   }, []);
   const homePageSchema = {
