@@ -24,18 +24,20 @@ export default function App({
     <>
       <Head>
         <title>{pageProps?.title}</title>
-        <meta name='description' content={pageProps?.description} key='desc' />
+        <meta name="description" content={pageProps?.description} key='desc'/>
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:title' content={pageProps?.title} />
         <meta property='og:description' content={pageProps?.description} />
+    
       </Head>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <SessionProvider session={session}>
-            <Layout>
+            <Layout> 
               <Script
+                async
+                defer
                 src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
-                strategy='afterInteractive'
               />
               {/*------------ Google analytics start ---------------- */}
               <Script async defer id='google-analytics'>
