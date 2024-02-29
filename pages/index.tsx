@@ -44,7 +44,9 @@ export default function Home({
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
   useEffect(() => {
-    
+    const check = async () => {
+      await getMaintainance();
+    };
     check();
     const dashboardImages = DashboardImages();
     setDynamicImages(
