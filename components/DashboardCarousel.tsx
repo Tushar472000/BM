@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { addProdBuyClicksLog } from '@/services/spot-prices';
 import { useSelector } from 'react-redux';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
 
@@ -31,15 +31,18 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
       console.error('Error adding product:', error);
     }
   };
-  const settings = {
-    dots: false,
-    arrows: true,
-    infinite: true,
-    autoplay: true,
-    speed: 2000,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
+  const settings = useMemo(
+    () => ({
+      dots: false,
+      arrows: true,
+      infinite: true,
+      autoplay: true,
+      speed: 2000,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    }),
+    []
+  );
   return (
     <>
       <Head>
