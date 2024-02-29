@@ -1,17 +1,23 @@
-import { search } from '@/services/dashboard';
-import { AnimatePresence } from 'framer-motion';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  FormEvent
+} from 'react';
 import { useRouter } from 'next/router';
-import { FormEvent, useEffect, useRef, useState } from 'react';
-
+import dynamic from 'next/dynamic';
 import { MdCancel } from 'react-icons/md';
 import useOnClickOutside from '@/hooks/useOnclickOutside';
-import dynamic from 'next/dynamic';
+import { search } from '@/services/dashboard';
+import { AnimatePresence } from 'framer-motion';
 
 const SearchResults = dynamic(() => import('./SearchResults'));
 const SearchSpinner = dynamic(() => import('./Loaders/SearchSpinner'));
 
 const pageSize = 12;
 const pageNumber = 1;
+
 export default function Search() {
   const [searchedData, setSearchedData] = useState<Awaited<
     ReturnType<typeof search>
@@ -22,39 +28,35 @@ export default function Search() {
   const searchResultsRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  useEffect(() => {
-    handleClose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.href]);
-  useOnClickOutside(searchResultsRef, () => closeSearchResult());
+
   const closeSearchResult = () => {
     setSearchedData(null);
     setShowSearchedData(false);
   };
-  const searchHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    try {
+
+  const searchHandler = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
       const { value } = e.target;
-      setKeyword(e.target.value);
-      setSearchKw(e.target.value);
-      if (value)
-        if (value.length >= 0 && value.length <= 3) {
-          setLoading(false);
-          setShowSearchedData(false);
-        }
+      setKeyword(value);
+      setSearchKw(value);
+
+      if (value.length >= 0 && value.length <= 3) {
+        setLoading(false);
+        setShowSearchedData(false);
+      }
+
       if (value.length >= 3) {
         setLoading(true);
-      }
-      if (value.length >= 3) {
         setShowSearchedData(true);
       } else {
         setSearchedData(null);
         setShowSearchedData(false);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    },
+    []
+  );
+
   const inputFocusHandler = () => {
     if (
       searchedData &&
@@ -65,11 +67,13 @@ export default function Search() {
     }
     setShowSearchedData(false);
   };
+
   const handleClose = () => {
     closeSearchResult();
     setKeyword('');
     setSearchKw('');
   };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (keyword.trim().length >= 1) {
@@ -77,36 +81,32 @@ export default function Search() {
       handleClose();
     }
   };
+
   useEffect(() => {
-    if (keyword.length < 3) {
-      setSearchedData(null);
-      setShowSearchedData(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchedData]);
+    closeSearchResult();
+  }, [router.asPath]);
+
+  useOnClickOutside(searchResultsRef, closeSearchResult);
+
   useEffect(() => {
-    // Use a timer variable to keep track of the setTimeout
     let timer: NodeJS.Timeout;
 
-    // Function to handle the search API call with debounce behavior
     const handleSearchDebounced = async (query: any) => {
       setLoading(true);
-      // Clear any existing timer
-      clearTimeout(timer);
 
-      // If the search term is empty, reset the search results and return
       if (!query) {
         setSearchedData(null);
         setShowSearchedData(false);
         return;
       }
-      // Set a new timer for the API call after the specified delay (e.g., 500ms)
+
       timer = setTimeout(async () => {
-        const data = await search(query ,pageSize , pageNumber);
+        const data = await search(query, pageSize, pageNumber);
         setLoading(false);
         setSearchedData(data);
       }, 2000); // Adjust the delay as needed (e.g., 500ms)
     };
+
     const query = {
       searchFrom: 'advanced',
       searchKW: keyword
@@ -117,18 +117,17 @@ export default function Search() {
       productType: '',
       itemWeight: '',
       series: '',
-      size:pageSize,
-      pageNumber:pageNumber
+      size: pageSize,
+      pageNumber: pageNumber
     };
 
     if (keyword.length >= 3) {
-      // Call the debounced searchAPI when the user pauses typing
       handleSearchDebounced(query);
     }
-    // Cleanup the timer when the component unmounts
+
     return () => clearTimeout(timer);
   }, [keyword]);
-  
+
   return (
     <>
       <div className='relative w-full'>
@@ -175,8 +174,11 @@ export default function Search() {
               handleClose={handleClose}
             />
           ) : keyword.length >= 1 && loading === true ? (
-            <div className={`md:full absolute inset-x-0 z-40 mx-auto max-h-[28rem] overflow-y-hidden flex w-auto flex-col gap-4 divide-gray-300  rounded-2xl bg-white text-black shadow-xl md:block md:divide-y md:px-4 md:py-0 lg:w-full mt-0.5 md:mt-0.5 lg:mt-0.5`}><SearchSpinner />
-              </div>
+            <div
+              className={`md:full absolute inset-x-0 z-40 mx-auto mt-0.5 flex max-h-[28rem] w-auto flex-col gap-4 divide-gray-300  overflow-y-hidden rounded-2xl bg-white text-black shadow-xl md:mt-0.5 md:block md:divide-y md:px-4 md:py-0 lg:mt-0.5 lg:w-full`}
+            >
+              <SearchSpinner />
+            </div>
           ) : searchedData && searchedData.data.searchProducts.length < 1 ? (
             <SearchResults
               ref={searchResultsRef}
