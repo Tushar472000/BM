@@ -49,7 +49,7 @@ export default function Layout({ children }: LayoutProps, req: NextRequest) {
             href='https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-favicon.png'
             className='object-cover'
           />
-        <script async defer
+          <script async defer
             type='application/ld+json'
             dangerouslySetInnerHTML={addProductJsonLd()}
             key='product-jsonld'

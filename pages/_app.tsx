@@ -24,16 +24,21 @@ export default function App({
     <>
       <Head>
         <title>{pageProps?.title}</title>
-        <meta name="description" content={pageProps?.description} key='desc'/>
+        <meta name='description' content={pageProps?.description} key='desc' />
         <meta property='og:type' content={data.OGTags.home.type} />
         <meta property='og:title' content={pageProps?.title} />
         <meta property='og:description' content={pageProps?.description} />
-    
+        {/* <meta property='og:url' content={`${process.env.WEBSITE_URL}`} /> */}
+        {/* <meta
+          property='og:image'
+          content='https://res.cloudinary.com/bullionmentor/image/upload/Images-Icons/thumbnail.webp' // Path to your thumbnail image
+        /> */}
+        {/* <link rel='canonical' href={`${process.env.WEBSITE_URL}`} /> */}
       </Head>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <SessionProvider session={session}>
-            <Layout> 
+            <Layout>
               <Script
                 async
                 defer
@@ -48,7 +53,7 @@ export default function App({
               gtag('config', 'G-H1CHYCNFQV');
               `}
               </Script>
-              <Component {...pageProps} />
+               <Component {...pageProps} />
             </Layout>
           </SessionProvider>
         </PersistGate>
