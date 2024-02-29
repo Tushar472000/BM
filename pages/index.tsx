@@ -44,7 +44,6 @@ export default function Home({
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
   useEffect(() => {
-    
     const dashboardImages = DashboardImages();
     setDynamicImages(
       dashboardImages.filter((image) => image.isStatic === false)
@@ -55,14 +54,7 @@ export default function Home({
   }, []);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  useEffect(() => {
-    if (user.hasVisited === false) {
-      setTimeout(() => {
-        toggleSubscribeModal();
-        dispatch(isVisited(true));
-      }, 6000);
-    }
-  }, []);
+
   const homePageSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
