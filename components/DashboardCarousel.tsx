@@ -20,12 +20,16 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const addProduct = async (imageForVenderId: any) => {
-    await addProdBuyClicksLog(
-      productName,
-      vendorName,
-      customerId,
-      imageForVenderId
-    );
+    try {
+      await addProdBuyClicksLog(
+        productName,
+        vendorName,
+        customerId,
+        imageForVenderId
+      );
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
   };
   const settings = {
     dots: false,
@@ -41,6 +45,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
       <Head>
         <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
         <link rel='preload' as='image' href={images[0].imagePath}></link>
+        <link rel='preconnect' href={images[0].eventRedirectiveUrl}></link>
       </Head>
       <Suspense
         fallback={
@@ -64,15 +69,16 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     src={image.imagePath}
                     alt={image.imageName}
                     priority={true}
-                    loading='eager'
+                    loading='lazy' // Change loading attribute to 'lazy'
                   />
+
                   <Image
                     className='block sm:hidden'
                     fill
                     src={image.mobileImageurl}
                     alt={image.imageName}
                     priority={true}
-                    loading='eager'
+                    loading='lazy' // Change loading attribute to 'lazy'
                     quality={60}
                   />
                 </Link>
