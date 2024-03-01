@@ -20,6 +20,7 @@ const ProductListing = () => {
         const fetchedProducts = await getTopProducts(getBy, searchKeyword);
         // console.log(fetchedProducts);
         setTopProducts(fetchedProducts);
+        alert(fetchedProducts.homePageProductDetails)
       } catch (error) {
         console.error('Error fetching top products:', error);
         // Handle the error if needed
