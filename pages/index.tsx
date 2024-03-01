@@ -32,17 +32,14 @@ const DescText = dynamic(
 );
 const Search = dynamic(() => import('@/components/Search'));
 
-export default function Home({
-  title,
-  description,
-  topProducts
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
   const [isRequestModal, toggleRequestModal] = useToggle();
   const [isSubscribeModal, toggleSubscribeModal] = useToggle();
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
+  const [topProducts, setTopProducts] = useState(null);
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -66,6 +63,24 @@ export default function Home({
       }, 6000);
     }
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getBy: GetTopProductsBy | undefined =undefined /* your getBy logic */;
+        const searchKeyword: string | undefined = undefined/* your searchKeyword logic */;
+
+        const fetchedTopProducts = await getTopProducts(getBy, searchKeyword);
+        setTopProducts(fetchedTopProducts);
+      } catch (error) {
+        console.error('Error fetching top products:', error);
+        // Handle the error if needed
+      }
+    };
+
+    fetchData();
+  }, []);
+  const title = data.site.home.page;
+    const description = data.site.home.description;
   const homePageSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -73,18 +88,18 @@ export default function Home({
     url: 'https://www.bullionmentor.com/',
     logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
   };
-  const itemListElement = topProducts.homePageProductDetails.map(
-    (product: any, index: number) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: 'https://www.bullionmentor.com/' + product.shortName
-    })
-  );
-  const trendingProductsSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: itemListElement
-  };
+  // const itemListElement = topProducts.homePageProductDetails.map(
+  //   (product: any, index: number) => ({
+  //     '@type': 'ListItem',
+  //     position: index + 1,
+  //     url: 'https://www.bullionmentor.com/' + product.shortName
+  //   })
+  // );
+  // const trendingProductsSchema = {
+  //   '@context': 'https://schema.org',
+  //   '@type': 'ItemList',
+  //   itemListElement: itemListElement
+  // };
   return (
     <>
       <Head>
@@ -122,7 +137,7 @@ export default function Home({
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
         />
-        <script
+        {/* <script
           async
           defer
           type='application/ld+json'
@@ -130,7 +145,7 @@ export default function Home({
             __html: JSON.stringify(trendingProductsSchema)
           }}
           key='product-jsonld'
-        ></script>
+        ></script> */}
           </Head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
@@ -256,7 +271,7 @@ export default function Home({
                           : 'grid-cols-1 lg:grid-cols-2'
                       }`}
                     >
-                      {topProducts.homePageProductDetails.map(
+                      {topProducts?topProducts.homePageProductDetails.map(
                         (product: any) => (
                           <TopProductItem
                             view={view}
@@ -264,7 +279,7 @@ export default function Home({
                             {...product}
                           />
                         )
-                      )}
+                      ):'empty'}
                     </div>
                   </Suspense>
                 </div>
@@ -286,28 +301,28 @@ export default function Home({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query }) => {
-  const getBy = query.getBy as GetTopProductsBy | undefined;
-  const searchKeyword = query.search as string | undefined;
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
-  const topProducts = await getTopProducts(getBy, searchKeyword);
-  const title = data.site.home.page;
-  const description = data.site.home.description;
-  return {
-    props: {
-      title,
-      description,
-      topProducts: topProducts
-    }
-  };
-};
+// export const getServerSideProps: GetServerSideProps<{
+//   title: any;
+//   description: any;
+//   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
+// }> = async ({ res, query }) => {
+//   const getBy = query.getBy as GetTopProductsBy | undefined;
+//   const searchKeyword = query.search as string | undefined;
+//   res.setHeader(
+//     'Cache-control',
+//     'public, sa-maxage=10, state-while-revalidate=59'
+//   );
+//   const topProducts = await getTopProducts(getBy, searchKeyword);
+//   const title = data.site.home.page;
+//   const description = data.site.home.description;
+//   return {
+//     props: {
+//       title,
+//       description,
+//       topProducts: topProducts
+//     }
+//   };
+// };
 
 function LeftAdvertisements({ src }: any) {
   return (
