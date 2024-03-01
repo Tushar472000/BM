@@ -16,7 +16,7 @@ const ProductListing = () => {
       try {
         const getBy: GetTopProductsBy | undefined = undefined /* your getBy logic */
         const searchKeyword: string | undefined = undefined/* your searchKeyword logic */
-
+          console.log('HIIIIIIIIIIIIII')
         const fetchedProducts = await getTopProducts(getBy, searchKeyword);
         // console.log(fetchedProducts);
         setTopProducts(fetchedProducts);
