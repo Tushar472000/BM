@@ -66,6 +66,7 @@ export default function Home({
       }, 6000);
     }
   }, []);
+  
   const homePageSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
