@@ -211,7 +211,7 @@ export default function Home() {
                 </div>
 
                 {/* ******************** PRODUCT LISTING ******************** */}
-                <ProductListing></ProductListing>
+                <ProductListing/>
               </div>
             </section>
             <DescText />

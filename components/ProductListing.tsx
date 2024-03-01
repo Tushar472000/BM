@@ -21,6 +21,7 @@ const ProductListing = () => {
         // console.log(fetchedProducts);
         setTopProducts(fetchedProducts);
         alert(fetchedProducts.homePageProductDetails)
+        console.log(fetchedProducts);
       } catch (error) {
         console.error('Error fetching top products:', error);
         // Handle the error if needed
@@ -28,7 +29,7 @@ const ProductListing = () => {
     };
 
     fetchData();
-  }, [topProducts]);
+  }, []);
   return (
     <>
       <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
