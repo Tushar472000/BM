@@ -286,42 +286,28 @@ export default function Home({
   );
 }
 
-
-
-const getServerSideProps: GetServerSideProps<{
+export const getServerSideProps: GetServerSideProps<{
   title: any;
   description: any;
   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ query }) => {
+}> = async ({ res, query }) => {
   const getBy = query.getBy as GetTopProductsBy | undefined;
   const searchKeyword = query.search as string | undefined;
-
-  try {
-    const [title, description, topProducts] = await Promise.all([
-      data.site.home.page,
-      data.site.home.description,
-      getTopProducts(getBy, searchKeyword),
-    ]);
-
-    return {
-      props: {
-        title,
-        description,
-        topProducts,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching data:', error);
-
-    return {
-      notFound: true,
-    };
-  }
+  res.setHeader(
+    'Cache-control',
+    'public, sa-maxage=10, state-while-revalidate=59'
+  );
+  const topProducts = await getTopProducts(getBy, searchKeyword);
+  const title = data.site.home.page;
+  const description = data.site.home.description;
+  return {
+    props: {
+      title,
+      description,
+      topProducts: topProducts
+    }
+  };
 };
-
-export { getServerSideProps };
-
-
 
 function LeftAdvertisements({ src }: any) {
   return (
