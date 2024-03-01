@@ -39,7 +39,7 @@ export default function Home() {
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
-  const [topProducts, setTopProducts] = useState(null);
+  const [topProducts, setTopProducts] = useState<any>(null);
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
