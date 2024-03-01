@@ -23,6 +23,7 @@ import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
+import ProductListing from '@/components/ProductListing';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
@@ -32,17 +33,15 @@ const DescText = dynamic(
 );
 const Search = dynamic(() => import('@/components/Search'));
 
-export default function Home({
-  title,
-  description,
-  topProducts
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
   const [isRequestModal, toggleRequestModal] = useToggle();
   const [isSubscribeModal, toggleSubscribeModal] = useToggle();
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
+  const title = data.site.home.page;
+  const description = data.site.home.description;
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -73,18 +72,18 @@ export default function Home({
     url: 'https://www.bullionmentor.com/',
     logo: 'https://res.cloudinary.com/bold-pm/image/upload/BBD/BM-logo.webp'
   };
-  const itemListElement = topProducts.homePageProductDetails.map(
-    (product: any, index: number) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url: 'https://www.bullionmentor.com/' + product.shortName
-    })
-  );
-  const trendingProductsSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    itemListElement: itemListElement
-  };
+  // const itemListElement = topProducts.homePageProductDetails.map(
+  //   (product: any, index: number) => ({
+  //     '@type': 'ListItem',
+  //     position: index + 1,
+  //     url: 'https://www.bullionmentor.com/' + product.shortName
+  //   })
+  // );
+  // const trendingProductsSchema = {
+  //   '@context': 'https://schema.org',
+  //   '@type': 'ItemList',
+  //   itemListElement: itemListElement
+  // };
   return (
     <>
       <Head>
@@ -122,7 +121,7 @@ export default function Home({
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageSchema) }}
         />
-        <script
+        {/* <script
           async
           defer
           type='application/ld+json'
@@ -130,7 +129,7 @@ export default function Home({
             __html: JSON.stringify(trendingProductsSchema)
           }}
           key='product-jsonld'
-        ></script>
+        ></script> */}
           </Head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
@@ -212,62 +211,7 @@ export default function Home({
                 </div>
 
                 {/* ******************** PRODUCT LISTING ******************** */}
-                <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
-                  {/* ******************** PRODUCT LIST TITLE ******************** */}
-                  <div className='flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-center lg:gap-0'>
-                    <h2 className='-mt-1 flex items-center gap-2 text-xl font-semibold md:-mt-0 md:text-2xl'>
-                      <GoFlame className='text-2xl text-primary md:text-3xl' />{' '}
-                      Trending Deals
-                    </h2>
-                    {/* ******************** MENU TOGGLE BUTTON ******************** */}
-                    <div className='hidden gap-6 self-end md:flex'>
-                      {/* ******************** DETAILED VIEW BUTTON ******************** */}
-                      <button
-                        onClick={() => setView('detailed')}
-                        className={`flex items-center gap-2 px-4 py-2 ${
-                          view === 'detailed'
-                            ? 'rounded-md bg-primary text-white'
-                            : 'bg-white'
-                        }`}
-                      >
-                        <GiHamburgerMenu size={25} />
-                        <span>Detailed View</span>
-                      </button>
-                      {/* ******************** GRID VIEW BUTTON ******************** */}
-                      <button
-                        onClick={() => setView('grid')}
-                        className={`flex items-center gap-2 px-4 py-2 ${
-                          view === 'grid'
-                            ? 'rounded-md bg-primary text-white'
-                            : 'bg-white'
-                        }`}
-                      >
-                        <IoGridSharp size={25} />
-                        <span>Grid View</span>
-                      </button>
-                    </div>
-                  </div>
-                  {/* ******************** PRODUCTS ARRAY ******************** */}
-                  <Suspense fallback={<GridViewSkeleton />}>
-                    <div
-                      className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
-                        view === 'grid'
-                          ? 'grid-cols-2 xl:grid-cols-4 '
-                          : 'grid-cols-1 lg:grid-cols-2'
-                      }`}
-                    >
-                      {topProducts.homePageProductDetails.map(
-                        (product: any) => (
-                          <TopProductItem
-                            view={view}
-                            key={product.productId}
-                            {...product}
-                          />
-                        )
-                      )}
-                    </div>
-                  </Suspense>
-                </div>
+                <ProductListing></ProductListing>
               </div>
             </section>
             <DescText />
@@ -286,28 +230,7 @@ export default function Home({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
-  topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query }) => {
-  const getBy = query.getBy as GetTopProductsBy | undefined;
-  const searchKeyword = query.search as string | undefined;
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
-  const topProducts = await getTopProducts(getBy, searchKeyword);
-  const title = data.site.home.page;
-  const description = data.site.home.description;
-  return {
-    props: {
-      title,
-      description,
-      topProducts: topProducts
-    }
-  };
-};
+
 
 function LeftAdvertisements({ src }: any) {
   return (
