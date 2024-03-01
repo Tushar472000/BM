@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { GoFlame } from 'react-icons/go';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoGridSharp } from 'react-icons/io5';
@@ -7,10 +7,27 @@ import TopProductItem from '@/containers/home/TopProductItem';
 import { getTopProducts } from '@/services/spot-prices';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { GetTopProductsBy } from '@/interfaces/typeinterfaces';
-const ProductListing = ({
-  topProducts
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const ProductListing = () => {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
+  const [topProducts, setTopProducts] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getBy: GetTopProductsBy | undefined = undefined /* your getBy logic */
+        const searchKeyword: string | undefined = undefined/* your searchKeyword logic */
+
+        const fetchedProducts = await getTopProducts(getBy, searchKeyword);
+        // console.log(fetchedProducts);
+        setTopProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Error fetching top products:', error);
+        // Handle the error if needed
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <>
       <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
@@ -57,7 +74,7 @@ const ProductListing = ({
                 : 'grid-cols-1 lg:grid-cols-2'
             }`}
           >
-            {topProducts && topProducts.homePageProductDetails && topProducts.homePageProductDetails.map((product: any) => (
+            {topProducts && topProducts.homePageProductDetails.map((product: any) => (
               <TopProductItem
                 view={view}
                 key={product.productId}
@@ -70,21 +87,23 @@ const ProductListing = ({
     </>
   );
 };
-export const getServerSideProps: GetServerSideProps<{
-  topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query }) => {
-  const getBy = query.getBy as GetTopProductsBy | undefined;
-  const searchKeyword = query.search as string | undefined;
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
-  const topProducts = await getTopProducts(getBy, searchKeyword);
+// export const getServerSideProps: GetServerSideProps<{
+//   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
+// }> = async ({ res, query }) => {
+//   const getBy = query.getBy as GetTopProductsBy | undefined;
+//   const searchKeyword = query.search as string | undefined;
+//   res.setHeader(
+//     'Cache-control',
+//     'public, sa-maxage=10, state-while-revalidate=59'
+//   );
+//   const topProducts = await getTopProducts(getBy, searchKeyword);
+//   console.log(query.getBy)
+//   console.log(query.search)
 
-  return {
-    props: {
-      topProducts: topProducts
-    }
-  };
-};
-export default ProductListing;
+//   return {
+//     props: {
+//       topProducts: topProducts
+//     }
+//   };
+// };
+ export default ProductListing;

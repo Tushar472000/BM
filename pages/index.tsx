@@ -211,7 +211,7 @@ export default function Home() {
                 </div>
 
                 {/* ******************** PRODUCT LISTING ******************** */}
-                <ProductListing topProducts={undefined}></ProductListing>
+                <ProductListing></ProductListing>
               </div>
             </section>
             <DescText />
