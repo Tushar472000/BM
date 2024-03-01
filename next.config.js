@@ -310,7 +310,7 @@ const nextConfig = {
       'online.kitco.com',
       'lh3.googleusercontent.com'
     ],
-   
+    unoptimized: false
   },
   env: {
     BASE_URL: 'http://106.201.231.27:8082',
