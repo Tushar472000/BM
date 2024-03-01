@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ProductItem } from '@/interfaces/typeinterfaces';
-
 function GridView({
   productId,
   imageUrl,
@@ -59,8 +58,6 @@ function GridView({
             width={500}
             height={500}
             className='md:h-28 md:w-28 lg:h-28 lg:w-28 '
-            // priority={true}
-            // loading='eager'
             priority={false}
           />
         </Link>
@@ -107,32 +104,29 @@ function GridView({
         <span className='h-10 font-semibold text-primary md:h-9 lg:h-6'>
           As low as {toCurrency(cheapestPrice)}
         </span>
-
         <div className='-mt-3 w-full items-end px-3 text-center lg:ml-3 lg:mr-3   lg:px-6'>
-          {/* <div className='absolute mt-5 ml-2 flex h-full w-24 items-center justify-center border-t-2 border-gray-300 sm:ml-4 lg:ml-0'></div> */}
-
-          <div className='mt-6 w-full'>
+          <div className='w-full'>
             <div className=' justify-center'>
+              <div className='pt-2 pb-2 lg:mt-4'>
+                <div className=' my-1 border-t-2 border-solid border-gray-400' />
+              </div>
               <Link
                 href={'/' + shortName}
-                className='group relative inline-flex font-semibold text-blue-500 underline   '
+                className='group relative mb-2 inline-flex font-semibold text-blue-500 underline'
                 aria-label={`Compare ${productName}`}
                 prefetch={false}
               >
                 <button className='hover:text-[#0F4463]'>Compare</button>
               </Link>
-
-              {/* <div className='relative'>
-                <div className='absolute mt-1 h-full border-l-2 border-gray-300'></div>
-              </div> */}
               <Link
                 target={'_blank'}
                 href={competitorProductUrl}
                 aria-label={`Buy ${productName}`}
                 prefetch={false}
                 onClick={addProduct}
-                className='group relative inline-block w-full rounded-full bg-primary py-2 font-medium text-white'
+                className='group relative inline-block w-full overflow-hidden rounded-full bg-primary py-2 font-medium text-white'
               >
+                <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
                 <span className='relative'>Buy</span>
               </Link>
             </div>
@@ -142,7 +136,6 @@ function GridView({
     </div>
   );
 }
-
 function DetaildView({
   productId,
   imageUrl,
@@ -167,7 +160,6 @@ function DetaildView({
   const productNameSlice = productNamenew?.slice(0, 49) + '...';
   const [customerId, setCustomerId] = useState(0);
   const user = useSelector(selectUser);
-
   useEffect(() => {
     if (user.isLoggedin === false) {
       setCustomerId(0);
@@ -176,7 +168,6 @@ function DetaildView({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const addProduct = async () => {
     const response = await addProdBuyClicksLog(
       productName,
@@ -262,7 +253,6 @@ function DetaildView({
               <TooltipStatus view='detailed' productName={productName} />
             )}
           </div>
-
           <span className='font-medium text-[#AF0E0E]'>
             Premium {toCurrency(asLowAs)}
           </span>
@@ -272,31 +262,34 @@ function DetaildView({
           <span className='font-semibold text-primary'>
             As low as {toCurrency(cheapestPrice)}
           </span>
-
-          <Link
-            href={'/' + shortName}
-            className='group font-semibold text-blue-500 underline decoration-blue-500 hover:text-[#0F4463] hover:underline '
-            aria-label={`Compare ${productName}`}
-            prefetch={false}
-          >
-            Compare
-          </Link>
-
-          {/* <div className='relative hidden sm:block'>
-                    <div className='absolute mt-1 h-full w-full border-l-2 border-gray-300'></div>
-                  </div> */}
-          <div className='mt-2'>
-            <Link
-              target={'_blank'}
-              href={competitorProductUrl}
-              aria-label={`Buy ${productName}`}
-              prefetch={false}
-              onClick={addProduct}
-              className='group relative inline-block overflow-hidden rounded-full bg-primary px-9 py-2 font-medium text-white'
-            >
-              <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
-              <span className='relative'>Buy</span>
-            </Link>
+          <div className='hidden pt-2 sm:block  lg:mt-4'>
+            <div className=' mt-1 border-t-2 border-solid border-gray-300' />
+          </div>
+          <div className='sm:mx-2 sm:flex sm:items-center sm:gap-1'>
+            <div className='sm:w-[45%] sm:text-center'>
+              <Link
+                href={'/' + shortName}
+                className='group w-full font-semibold text-blue-500 underline decoration-blue-500 hover:text-[#0F4463] hover:underline'
+                aria-label={`Compare ${productName}`}
+                prefetch={false}
+              >
+                Compare
+              </Link>
+            </div>
+            <div className=' m-5 hidden h-[20px] border-l-2 border-solid border-gray-300 sm:block'></div>
+            <div className='mt-2 sm:w-full sm:text-center'>
+              <Link
+                target={'_blank'}
+                href={competitorProductUrl}
+                aria-label={`Buy ${productName}`}
+                prefetch={false}
+                onClick={addProduct}
+                className='group relative inline-block overflow-hidden rounded-full bg-primary px-9 py-2 font-medium text-white sm:w-full'
+              >
+                <span className='absolute top-0 left-0  mb-0 flex h-0 w-full translate-y-0 transform bg-secondary opacity-90 transition-all duration-300 ease-out group-hover:h-full '></span>
+                <span className='relative'>Buy</span>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
