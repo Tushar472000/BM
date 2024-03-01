@@ -33,8 +33,7 @@ const DescText = dynamic(
 const Search = dynamic(() => import('@/components/Search'));
 
 export default function Home({
-  title,
-  description,
+  
   topProducts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
@@ -43,6 +42,8 @@ export default function Home({
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
+  const title = data.site.home.page;
+  const description = data.site.home.description;
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -287,8 +288,7 @@ export default function Home({
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  title: any;
-  description: any;
+  
   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
 }> = async ({ res, query }) => {
   const getBy = query.getBy as GetTopProductsBy | undefined;
@@ -298,12 +298,10 @@ export const getServerSideProps: GetServerSideProps<{
     'public, sa-maxage=10, state-while-revalidate=59'
   );
   const topProducts = await getTopProducts(getBy, searchKeyword);
-  const title = data.site.home.page;
-  const description = data.site.home.description;
+  
   return {
     props: {
-      title,
-      description,
+      
       topProducts: topProducts
     }
   };
