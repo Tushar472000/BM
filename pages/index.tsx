@@ -286,33 +286,41 @@ export default function Home({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{
+
+
+const getServerSideProps: GetServerSideProps<{
   title: any;
   description: any;
   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
-}> = async ({ res, query }) => {
+}> = async ({ query }) => {
   const getBy = query.getBy as GetTopProductsBy | undefined;
   const searchKeyword = query.search as string | undefined;
-  res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
-  );
 
-  // Use Promise.all to parallelize asynchronous tasks
-  const [title, description, topProducts] = await Promise.all([
-    data.site.home.page,
-    data.site.home.description,
-    getTopProducts(getBy, searchKeyword),
-  ]);
+  try {
+    const [title, description, topProducts] = await Promise.all([
+      data.site.home.page,
+      data.site.home.description,
+      getTopProducts(getBy, searchKeyword),
+    ]);
 
-  return {
-    props: {
-      title,
-      description,
-      topProducts,
-    },
-  };
+    return {
+      props: {
+        title,
+        description,
+        topProducts,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching data:', error);
+
+    return {
+      notFound: true,
+    };
+  }
 };
+
+export { getServerSideProps };
+
 
 
 function LeftAdvertisements({ src }: any) {
