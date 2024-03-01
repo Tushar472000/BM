@@ -297,17 +297,23 @@ export const getServerSideProps: GetServerSideProps<{
     'Cache-control',
     'public, sa-maxage=10, state-while-revalidate=59'
   );
-  const topProducts = await getTopProducts(getBy, searchKeyword);
-  const title = data.site.home.page;
-  const description = data.site.home.description;
+
+  // Use Promise.all to parallelize asynchronous tasks
+  const [title, description, topProducts] = await Promise.all([
+    data.site.home.page,
+    data.site.home.description,
+    getTopProducts(getBy, searchKeyword),
+  ]);
+
   return {
     props: {
       title,
       description,
-      topProducts: topProducts
-    }
+      topProducts,
+    },
   };
 };
+
 
 function LeftAdvertisements({ src }: any) {
   return (
