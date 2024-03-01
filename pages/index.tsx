@@ -33,7 +33,8 @@ const DescText = dynamic(
 const Search = dynamic(() => import('@/components/Search'));
 
 export default function Home({
-  
+  title,
+  description,
   topProducts
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [view, setView] = useState<'detailed' | 'grid'>('grid');
@@ -42,8 +43,6 @@ export default function Home({
   const [hydrated, setHydrated] = useState(false);
   const [dynamicImages, setDynamicImages] = useState<any>();
   const [staticImage, setStaticImage] = useState<any>();
-  const title = data.site.home.page;
-  const description = data.site.home.description;
   useEffect(() => {
     const check = async () => {
       await getMaintainance();
@@ -132,7 +131,7 @@ export default function Home({
           }}
           key='product-jsonld'
         ></script>
-          </Head>
+      </Head>
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
           <div>
@@ -287,26 +286,62 @@ export default function Home({
   );
 }
 
+// export const getServerSideProps: GetServerSideProps<{
+//   title: any;
+//   description: any;
+//   topProducts: Awaited<ReturnType<typeof getTopProducts>>;
+// }> = async ({ res, query }) => {
+//   const getBy = query.getBy as GetTopProductsBy | undefined;
+//   const searchKeyword = query.search as string | undefined;
+//   res.setHeader(
+//     'Cache-control',
+//     'public, sa-maxage=10, state-while-revalidate=59'
+//   );
+//   const topProducts = await getTopProducts(getBy, searchKeyword);
+//   const title = data.site.home.page;
+//   const description = data.site.home.description;
+//   return {
+//     props: {
+//       title,
+//       description,
+//       topProducts: topProducts
+//     }
+//   };
+// };
+
 export const getServerSideProps: GetServerSideProps<{
-  
-  topProducts: Awaited<ReturnType<typeof getTopProducts>>;
+  title: any;
+  description: any;
+  topProducts?: Awaited<ReturnType<typeof getTopProducts>>;
 }> = async ({ res, query }) => {
-  const getBy = query.getBy as GetTopProductsBy | undefined;
-  const searchKeyword = query.search as string | undefined;
+  const { getBy, searchKeyword } = query as {
+    getBy?: GetTopProductsBy;
+    searchKeyword?: string;
+  };
+
+  // Apply revalidation if data changes infrequently (e.g., every 60 seconds)
   res.setHeader(
-    'Cache-control',
-    'public, sa-maxage=10, state-while-revalidate=59'
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=60'
   );
-  const topProducts = await getTopProducts(getBy, searchKeyword);
-  
+
+  // Conditionally fetch top products based on query parameters
+  let topProducts;
+
+  topProducts = await getTopProducts(getBy, searchKeyword);
+
+  const title = data.site.home.page;
+  const description = data.site.home.description;
   return {
     props: {
-      
-      topProducts: topProducts
+      title,
+      description,
+      topProducts // Include if fetched; omit if not
     }
   };
 };
 
+// ... rest of your component code
 function LeftAdvertisements({ src }: any) {
   return (
     <>
