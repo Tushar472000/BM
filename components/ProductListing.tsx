@@ -27,7 +27,7 @@ const ProductListing = () => {
     };
 
     fetchData();
-  }, []);
+  }, [topProducts]);
   return (
     <>
       <div className='flex flex-col gap-2 md:col-span-2 lg:col-span-9'>
