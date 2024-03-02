@@ -70,8 +70,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
 
                   <Image
                     className='block sm:hidden'
-                    width={600}
-                    height={600}
+                    fill
                     src={image.mobileImageurl}
                     alt={image.imageName}
                     priority={true}
