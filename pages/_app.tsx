@@ -39,7 +39,11 @@ export default function App({
         <PersistGate persistor={persistor}>
           <SessionProvider session={session}>
             <Layout>
-             
+              <Script
+                async
+                defer
+                src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
+              />
               {/*------------ Google analytics start ---------------- */}
               <Script async defer id='google-analytics'>
                 {`
