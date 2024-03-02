@@ -26,7 +26,7 @@ export default function App({
   useEffect(() => {
     const timer = setTimeout(() => {
       setScriptLoaded(true);
-    }, 6000); // 5000 milliseconds (5 seconds)
+    }, 6000); // 6000 milliseconds (5 seconds)
 
     return () => clearTimeout(timer); // Cleanup function to clear timer on unmount
   }, []);
