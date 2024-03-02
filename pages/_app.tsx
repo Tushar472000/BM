@@ -40,8 +40,8 @@ export default function App({
           <SessionProvider session={session}>
             <Layout>
               <Script
-                defer
                 src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
+                strategy='afterInteractive'
               />
               {/*------------ Google analytics start ---------------- */}
               <Script async defer id='google-analytics'>
