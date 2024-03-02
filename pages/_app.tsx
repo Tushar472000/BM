@@ -2,7 +2,7 @@ import '@/styles/globals.css';
 import { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import Layout from '@/components/Layout';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import store from '@/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -14,12 +14,23 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps }
 }: AppProps) {
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+
   useEffect(() => {
     window.onbeforeunload = () => {
       window.scrollTo(0, 0);
     };
   }, []);
   let persistor = persistStore(store);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setScriptLoaded(true);
+    }, 6000); // 5000 milliseconds (5 seconds)
+
+    return () => clearTimeout(timer); // Cleanup function to clear timer on unmount
+  }, []);
+
   return (
     <>
       <Head>
@@ -39,11 +50,13 @@ export default function App({
         <PersistGate persistor={persistor}>
           <SessionProvider session={session}>
             <Layout>
-              <Script
-                async
-                defer
-                src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
-              />
+              {scriptLoaded && (
+                <Script
+                  strategy='lazyOnload' // Adjust as needed
+                  src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
+                />
+              )}
+
               {/*------------ Google analytics start ---------------- */}
               <Script async defer id='google-analytics'>
                 {`
@@ -53,7 +66,7 @@ export default function App({
               gtag('config', 'G-H1CHYCNFQV');
               `}
               </Script>
-               <Component {...pageProps} />
+              <Component {...pageProps} />
             </Layout>
           </SessionProvider>
         </PersistGate>
