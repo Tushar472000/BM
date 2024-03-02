@@ -1,4 +1,4 @@
-import Slider from 'react-slick';
+// import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
@@ -9,6 +9,11 @@ import { useSelector } from 'react-redux';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import { selectUser } from '@/features/userSlice';
 import { DashboardCarouselProps } from '@/interfaces/propsinterfaces';
+import dynamic from 'next/dynamic';
+
+const Slider = dynamic(() => import('react-slick'), {
+  ssr: false // Only load on client-side
+});
 
 export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   const [productName, setProductName] = useState('');
@@ -48,7 +53,6 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
       <Head>
         <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
         <link rel='preload' as='image' href={images[0].imagePath}></link>
-        <link rel='preconnect' href={images[0].eventRedirectiveUrl}></link>
       </Head>
       <Suspense
         fallback={
@@ -71,8 +75,8 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     fill
                     src={image.imagePath}
                     alt={image.imageName}
-                    priority={true}
-                    loading='eager' 
+                    priority={index === 0} // Prioritize first image (adjust index)
+                    loading='eager'
                   />
 
                   <Image
@@ -81,7 +85,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
                     src={image.mobileImageurl}
                     alt={image.imageName}
                     priority={true}
-                    loading='eager' 
+                    loading='eager'
                     quality={60}
                   />
                 </Link>
