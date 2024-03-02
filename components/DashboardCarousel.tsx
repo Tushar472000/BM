@@ -39,8 +39,14 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
   return (
     <>
       <Head>
-        <link rel='preload' as='image' href={images[0].mobileImageurl}></link>
-        <link rel='preload' as='image' href={images[1].mobileImageurl}></link>
+        {images.map((image: any, index: any) => (
+          <link
+            rel='preload'
+            as='image'
+            key={index}
+            href={image.mobileImageurl}
+          ></link>
+        ))}
         <link rel='preload' as='image' href={images[0].imagePath}></link>
       </Head>
       <Suspense
