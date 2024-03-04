@@ -190,7 +190,7 @@ export default function Home({
               <div className='flex grid-cols-3 flex-col-reverse gap-4 md:grid lg:grid-cols-12'>
                 {/* ******************** LEFT ADVERTISEMENTS ******************** */}
 
-                <div className='flex h-auto flex-col gap-0 lg:col-span-3'>
+                <div className='flex h-auto flex-col gap-3 lg:col-span-3'>
                   <LeftAdvertisements src='/2024-1-oz-Canadian-Gold-Maple-Leaf-Coin.jpg' />
                   <LeftAdvertisements src='/2024-American-Eagle-Coins.jpg' />
                   <LeftAdvertisements src='https://res.cloudinary.com/bullionmentor/image/upload/Banners/Majestic-Gilded-Kookaburra_cswfqg.webp' />
