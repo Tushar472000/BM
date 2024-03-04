@@ -14,22 +14,12 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps }
 }: AppProps) {
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-
   useEffect(() => {
     window.onbeforeunload = () => {
       window.scrollTo(0, 0);
     };
   }, []);
   let persistor = persistStore(store);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setScriptLoaded(true);
-    }, 3000); // 5000 milliseconds (5 seconds)
-    // return () => clearTimeout(timer); // Cleanup function to clear timer on unmount
-  }, []);
-
   return (
     <>
       <Head>
@@ -49,12 +39,6 @@ export default function App({
         <PersistGate persistor={persistor}>
           <SessionProvider session={session}>
             <Layout>
-              {/* {scriptLoaded && (
-                <Script
-                  strategy='lazyOnload' // Adjust as needed
-                  src='https://www.googletagmanager.com/gtag/js?id=G-H1CHYCNFQV'
-                />
-              )} */}
               <script
                 async
                 defer
