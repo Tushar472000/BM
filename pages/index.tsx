@@ -22,6 +22,7 @@ import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
+import Search from './search';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
@@ -32,7 +33,7 @@ const SubscribeModal = dynamic(
 const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
-const Search = dynamic(() => import('@/components/Search'));
+// const Search = dynamic(() => import('@/components/Search'));
 
 export default function Home({
   title,
