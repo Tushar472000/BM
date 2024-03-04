@@ -20,12 +20,14 @@ import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton'
 import TopProductItem from '@/containers/home/TopProductItem';
 import DashboardImages from '@/services/DashboardImages';
 import { GridViewSkeleton } from '@/components/Loaders/Grid/GridViewSkeleton';
-import SubscribeModal from '@/components/ModalForm/Subscribe/SubscribeModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { isVisited, selectUser } from '@/features/userSlice';
 // -------------------------- Dynamic import -------------------//
 const RequestProductModal = dynamic(
   () => import('@/components/ModalForm/RequestProduct/RequestProductModal')
+);
+const SubscribeModal = dynamic(
+  () => import('@/components/ModalForm/Subscribe/SubscribeModal')
 );
 const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
@@ -136,7 +138,7 @@ export default function Home({
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
           <div>
-             {isSubscribeModal && (
+            {isSubscribeModal && (
               <SubscribeModal closeModal={toggleSubscribeModal} />
             )}
             {/* ******************** GRADIENT HEADING ******************** */}
@@ -278,7 +280,7 @@ export default function Home({
             {isRequestModal && (
               <RequestProductModal closeModal={toggleRequestModal} />
             )}
-         </div>
+          </div>
         ) : (
           <DashboardSkeleton />
         )}
