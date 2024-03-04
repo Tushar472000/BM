@@ -51,7 +51,7 @@ export default function DashboardCarousel({ images }: DashboardCarouselProps) {
         <Slider {...settings}>
           {images.map((image, index) => (
             <section key={index} aria-hidden='true'>
-              <div className='relative flex h-40 w-full overflow-hidden rounded-lg sm:h-44 sm:object-cover md:mt-2 md:h-40 lg:h-60 xl:h-80 '>
+              <div className='relative mt-4 flex h-40 w-full overflow-hidden rounded-lg sm:h-44 sm:object-cover md:mt-2 md:h-40 lg:h-60 xl:h-80'>
                 <Link
                   target='_blank'
                   href={image.eventRedirectiveUrl}
