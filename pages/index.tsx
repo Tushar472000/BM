@@ -14,7 +14,6 @@ import useToggle from '@/hooks/useToggle';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoGridSharp } from 'react-icons/io5';
 import dynamic from 'next/dynamic';
-
 import DashboardCarousel from '@/components/DashboardCarousel';
 import DashboardSkeleton from '@/components/Loaders/Dashboard/DashboardSkeleton';
 import TopProductItem from '@/containers/home/TopProductItem';
@@ -34,7 +33,6 @@ const DescText = dynamic(
   () => import('@/components/HomePageComponents/DescText')
 );
 // const Search = dynamic(() => import('@/components/Search'));
-
 export default function Home({
   title,
   description,

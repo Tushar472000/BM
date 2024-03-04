@@ -124,7 +124,7 @@ export default function TopNavbar() {
           <button
             aria-label='Mobile_Menu'
             onClick={() => setShowMobileMenu(true)}
-            className='mr-2 lg:hidden'
+            className='mr-2 lg:hidden w-[40px]'
           >
             <IconMenu className='h-10 w-10 fill-white stroke-2' />
           </button>
