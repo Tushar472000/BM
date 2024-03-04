@@ -28,7 +28,7 @@ export default function App({
       setScriptLoaded(true);
     }, 6000); // 5000 milliseconds (5 seconds)
 
-    return () => clearTimeout(timer); // Cleanup function to clear timer on unmount
+    // return () => clearTimeout(timer); // Cleanup function to clear timer on unmount
   }, []);
 
   return (
