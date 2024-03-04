@@ -136,6 +136,9 @@ export default function Home({
       <Suspense fallback={<DashboardSkeleton />}>
         {hydrated === true ? (
           <div>
+             {isSubscribeModal && (
+              <SubscribeModal closeModal={toggleSubscribeModal} />
+            )}
             {/* ******************** GRADIENT HEADING ******************** */}
             <section className='w-full bg-gradient-to-b from-secondary via-white to-white'>
               <div className='container relative mx-auto flex w-full flex-col items-center justify-center pt-4 pb-2'>
@@ -275,10 +278,7 @@ export default function Home({
             {isRequestModal && (
               <RequestProductModal closeModal={toggleRequestModal} />
             )}
-            {isSubscribeModal && (
-              <SubscribeModal closeModal={toggleSubscribeModal} />
-            )}
-          </div>
+         </div>
         ) : (
           <DashboardSkeleton />
         )}
