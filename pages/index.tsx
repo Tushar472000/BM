@@ -256,7 +256,7 @@ export default function Home({
                   {/* ******************** PRODUCTS ARRAY ******************** */}
                   <Suspense fallback={<GridViewSkeleton />}>
                     <div
-                      className={`grid gap-x-2 gap-y-4 md:gap-y-4 ${
+                      className={`grid gap-x-2 gap-y-4 md:gap-y-4 h-[1000px] overflow-auto ${
                         view === 'grid'
                           ? 'grid-cols-2 xl:grid-cols-4 '
                           : 'grid-cols-1 lg:grid-cols-2'
