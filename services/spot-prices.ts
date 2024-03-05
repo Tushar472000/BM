@@ -12,7 +12,7 @@ import {
 import { spotPriceInterface } from '@/types/types';
 
 export const getSpotPrice = async () => {
-  const response = await fetch(`${process.env.BASE_URL}/api/BestBullionDeals/GetSpotPrices`).then((res) => {
+  const response = await fetch(`https://bbdapi.bestbulliondeals.com/api/BestBullionDeals/GetSpotPrices`).then((res) => {
     return res.json()
   })
   return response.data[0] as spotPriceInterface
