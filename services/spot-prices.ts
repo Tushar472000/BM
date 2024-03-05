@@ -383,7 +383,7 @@ export const resetPassword = async (
 
 export const getMaintainance = async () => {
   const res = await fetch(
-    `${process.env.BASE_URL}/api/BestBullionDeals/GetMaintenance`
+    `https://bbdapi.bestbulliondeals.com/api/BestBullionDeals/GetMaintenance`
   );
   return res;
 };
